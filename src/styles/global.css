@@ -9,7 +9,21 @@
 }
 
 body {
-  background: linear-gradient(180deg, #352163 0%, #331972 57.81%, #33143c 100%);
-  width: 100vw;
+  background: linear-gradient(to bottom, #3498db, #ffffff);
+  width: auto;
   height: 100vh;
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }

@@ -1,0 +1,11 @@
+.page-home {
+  display: flex;
+  flex-direction: column;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1vw;
+  margin-top: 32px;
+}
