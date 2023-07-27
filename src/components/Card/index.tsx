@@ -1,6 +1,14 @@
 import "./Card.css";
-import { AiFillCloseCircle, AiFillEdit } from "react-icons/ai";
-import { ICard } from "../../common/ICard";
+import EditAndExcludeIcons from "../EditAndExcludeIcons";
+import { useState } from "react";
+import ModalEditCard from "../../components/Modal/EditCard";
+
+interface ICard {
+  title: string;
+  description?: string;
+  appearance: Date;
+  company: string;
+}
 
 const Card = () => {
   const calcDiffDays = (date: string) => {
@@ -23,14 +31,19 @@ const Card = () => {
     gradient = "yellow-gradient";
   }
 
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
   return (
     <div className={`card-container ${gradient}`}>
       <div className="card-header">
         <span className="card-apperrence-date">{apperrenceDate}</span>
-        <div className="card-icons">
-          <AiFillEdit size={25} className="card-icon" />
-          <AiFillCloseCircle size={25} className="card-icon" />
-        </div>
+        <EditAndExcludeIcons
+          editModal={openEditModal}
+          excludeModal={openEditModal}
+        />
       </div>
       <span className="card-title">Titulo do card</span>
       <span className="card-company-name">Nome da empresa</span>
@@ -40,6 +53,10 @@ const Card = () => {
         defaultValue={`descricao grande ou nao aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
         `}
         disabled={true}
+      />
+      <ModalEditCard
+        open={isEditModalOpen}
+        onCancel={() => setIsEditModalOpen(false)}
       />
     </div>
   );

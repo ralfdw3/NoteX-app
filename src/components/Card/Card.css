@@ -34,20 +34,6 @@
   font-size: 0.8em;
 }
 
-.card-icons {
-  align-self: end;
-}
-.card-icon {
-  border-radius: 6px;
-}
-
-.card-icon:hover {
-  background-color: #d3d3d3;
-  transition: background-color 0.3s, color 0.3s;
-  size: 30px;
-  cursor: pointer;
-}
-
 .card-title {
   font-size: 1.2em;
   font-weight: bold;

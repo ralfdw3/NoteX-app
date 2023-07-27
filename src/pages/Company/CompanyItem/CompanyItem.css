@@ -1,0 +1,26 @@
+.company-items {
+  display: flex;
+  border-radius: 8px;
+  padding: 6px 0;
+  width: 60vw;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  background-color: #4c94c4;
+}
+
+.company-items:hover {
+  transition: background-color 0.3s;
+  background-color: #83c1ea;
+}
+
+.company-icons {
+  display: flex;
+}
+
+.company-cards-icon:hover {
+  border-radius: 6px;
+  background-color: #d3d3d3;
+  transition: background-color 0.3s;
+  size: 30px;
+  cursor: pointer;
+}
