@@ -6,8 +6,32 @@
   margin: 20px 10px 10px 10px;
   border-radius: 10px;
   align-items: center;
-  background: linear-gradient(to bottom, #a2c5e8, hsl(204, 63%, 54%));
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+}
+
+.red-gradient {
+  background: linear-gradient(to bottom, #fff, hsl(0, 98%, 57%));
+}
+
+.yellow-gradient {
+  background: linear-gradient(to bottom, #fff, hsl(59, 98%, 63%));
+}
+
+.green-gradient {
+  background: linear-gradient(to bottom, #fff, hsl(113, 100%, 58%));
+}
+
+.card-header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-apperrence-date {
+  font-weight: bold;
+  margin-left: 8px;
+  font-size: 0.8em;
 }
 
 .card-icons {
@@ -18,8 +42,8 @@
 }
 
 .card-icon:hover {
-  background-color: #2980b9;
-  transition: background-color 0.5s, color 0.3s;
+  background-color: #d3d3d3;
+  transition: background-color 0.3s, color 0.3s;
   size: 30px;
   cursor: pointer;
 }
@@ -27,8 +51,7 @@
 .card-title {
   font-size: 1.2em;
   font-weight: bold;
-  padding: 6px;
-  border-bottom: 2px #fff solid;
+  border-bottom: 2px black solid;
 }
 
 .card-company-name {
@@ -36,7 +59,7 @@
 }
 
 .card-description {
-  width: 240px;
+  width: 260px;
   height: 100px;
   background: none;
   border: none;

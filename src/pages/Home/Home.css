@@ -3,9 +3,31 @@
   flex-direction: column;
 }
 
+.create-new-card {
+  margin: 20px 10px 0 10px;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  width: max-content;
+  transition: background-color 0.5s, color 0.3s;
+}
+
+.create-new-card:hover {
+  background-color: #2980b9;
+}
+
+.create-new-card span {
+  font-weight: bold;
+}
+.create-new-card-icon {
+  margin-left: 6px;
+}
+
 .cards-container {
   display: flex;
   flex-wrap: wrap;
   gap: 1vw;
-  margin-top: 32px;
+  margin-top: 10px;
 }
