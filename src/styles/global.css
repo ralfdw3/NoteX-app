@@ -3,15 +3,15 @@
   padding: 0;
   font-family: "Victor Mono", monospace;
   font-style: normal;
-  color: #242020;
   position: relative;
 }
 
 body {
-  background: linear-gradient(to bottom, #3498db, #ffffff);
+  background: linear-gradient(180deg, #352163 0%, #331972 57.81%, #33143c 100%);
   width: auto;
   height: 100vh;
   overflow-x: hidden;
+  color: #fff;
 }
 
 body::-webkit-scrollbar {

@@ -12,6 +12,7 @@
   border-radius: 8px;
   width: max-content;
   transition: background-color 0.5s, color 0.3s;
+  cursor: pointer;
 }
 
 .create-new-card:hover {

@@ -1,19 +1,30 @@
-import { Modal } from "antd";
-import { Content } from "antd/es/layout/layout";
 import { IModalCard } from "../../../common/interfaces/IModalCard";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { Button, Modal, Space } from "antd";
 
-const ModalExcludeCard: React.FC<IModalCard> = ({ open, onCancel }) => {
+interface IExcludeCard {
+  title: string;
+}
+
+const ModalExcludeCard: React.FC<IExcludeCard> = ({ title }) => {
+  const [modal, contextHolder] = Modal.useModal();
+
+  const confirm = () => {
+    modal.confirm({
+      title: title,
+      icon: <ExclamationCircleOutlined />,
+      content: "Bla bla ...",
+      okText: "确认",
+      cancelText: "取消",
+    });
+  };
+
+  // Retorne o conteúdo JSX do componente aqui
   return (
-    <Modal open={open} footer={null} onCancel={onCancel} width={700} centered>
-      <div>
-        <h1>Editar card</h1>
-        <div>
-          <Content>
-            <p>teste</p>
-          </Content>
-        </div>
-      </div>
-    </Modal>
+    <div>
+      <Button onClick={confirm}>Abrir Modal</Button>
+      {contextHolder}
+    </div>
   );
 };
 

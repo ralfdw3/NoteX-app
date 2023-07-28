@@ -10,15 +10,15 @@
 }
 
 .red-gradient {
-  background: linear-gradient(to bottom, #fff, hsl(0, 98%, 57%));
+  background: linear-gradient(180deg, #632121 0%, #721919 57.81%, #ab1212 100%);
 }
 
 .yellow-gradient {
-  background: linear-gradient(to bottom, #fff, hsl(59, 98%, 63%));
+  background: linear-gradient(180deg, #633f21 0%, #727219 57.81%, #9cab12 100%);
 }
 
 .green-gradient {
-  background: linear-gradient(to bottom, #fff, hsl(113, 100%, 58%));
+  background: linear-gradient(180deg, #396321 0%, #487219 57.81%, #28aa08 100%);
 }
 
 .card-header {
@@ -37,7 +37,7 @@
 .card-title {
   font-size: 1.2em;
   font-weight: bold;
-  border-bottom: 2px black solid;
+  border-bottom: 2px #fff solid;
 }
 
 .card-company-name {
@@ -51,6 +51,7 @@
   border: none;
   resize: none;
   outline: none;
+  color: #fff;
 }
 
 .card-description::-webkit-scrollbar {

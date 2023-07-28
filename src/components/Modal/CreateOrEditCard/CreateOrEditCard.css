@@ -1,0 +1,9 @@
+.modal-edit-content h1 {
+  color: black;
+  margin-bottom: 4vh;
+  border-bottom: 1px black solid;
+}
+
+.modal-input {
+  margin-bottom: 1vh;
+}
