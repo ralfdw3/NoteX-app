@@ -1,16 +1,17 @@
-import React from "react";
-import Header from "../../components/Header";
-import "./Home.css";
-import Card from "../../components/Card";
-import { AiFillPlusCircle } from "react-icons/ai";
 import { useState } from "react";
+import { AiFillPlusCircle } from "react-icons/ai";
+import Card from "../../components/Card";
+import Header from "../../components/Header";
 import ModalCreateOrEditCard from "../../components/Modal/CreateOrEditCard";
+import "./Home.css";
+import dayjs from "dayjs";
 
-const Home = () => {
+const Home: React.FC = () => {
   const [isCreateCardModalOpen, setIsCreateCardModalOpen] = useState(false);
   const openCreateCardModal = () => {
     setIsCreateCardModalOpen(true);
   };
+
   return (
     <section className="page-home">
       <Header />
@@ -20,16 +21,41 @@ const Home = () => {
       </div>
 
       <div className="home-cards cards-container">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Card
+          cardData={{
+            id: 1,
+            title: "Título do card 1",
+            description: "Descrição do card 1",
+            appearance: dayjs("2023-08-10"),
+            company: "Empresa do card 1",
+            status: "ABERTO",
+          }}
+        />
+        <Card
+          cardData={{
+            id: 2,
+            title: "Título do card 2",
+            description: "Descrição do card 2",
+            appearance: dayjs("2023-05-10"),
+            company: "Empresa do card 2",
+            status: "CONCLUIDO",
+          }}
+        />
+        <Card
+          cardData={{
+            id: 3,
+            title: "Título do card 3",
+            description: "Descrição do card 3",
+            appearance: dayjs("2023-07-29"),
+            company: "Empresa do card 3",
+            status: "EM NEGOCIAÇÃO",
+          }}
+        />
       </div>
       <ModalCreateOrEditCard
         open={isCreateCardModalOpen}
         onCancel={() => setIsCreateCardModalOpen(false)}
-        title="Novo card"
+        headerText="Novo card"
       />
     </section>
   );

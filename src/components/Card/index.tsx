@@ -2,38 +2,16 @@ import "./Card.css";
 import EditAndExcludeIcons from "../EditAndExcludeIcons";
 import { useState } from "react";
 import ModalCreateOrEditCard from "../Modal/CreateOrEditCard";
-import ModalExcludeCard from "../Modal/ExcludeCard";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
+import { ICard } from "../../common/interfaces/ICard";
+import dayjs from "dayjs";
 
-interface ICard {
-  title: string;
-  description?: string;
-  appearance: Date;
-  company: string;
+interface ICardProps {
+  cardData: ICard;
 }
 
-const Card = () => {
-  const calcDiffDays = (date: string) => {
-    const today = new Date();
-    const dateCard = new Date(date);
-    console.log(dateCard.getDate() - today.getDate() + 1);
-    return dateCard.getDate() - today.getDate() + 1;
-  };
-
-  const apperrenceDate = "2023-07-10";
-
-  const diffInDays = calcDiffDays(apperrenceDate);
-
-  let gradient;
-  if (diffInDays <= -7) {
-    gradient = "red-gradient";
-  } else if (diffInDays >= 0) {
-    gradient = "green-gradient";
-  } else {
-    gradient = "yellow-gradient";
-  }
-
+const Card: React.FC<ICardProps> = ({ cardData }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -50,29 +28,44 @@ const Card = () => {
     });
   };
 
+  const diffInDays = cardData.appearance.diff(dayjs(), "day");
+
+  let gradient;
+  if (diffInDays < -7) {
+    gradient = "red-gradient";
+  } else if (diffInDays >= 0) {
+    gradient = "green-gradient";
+  } else {
+    gradient = "yellow-gradient";
+  }
+
   return (
     <div className={`card-container ${gradient}`}>
       <div className="card-header">
-        <span className="card-apperrence-date">{apperrenceDate}</span>
+        <span className="card-apperrence-date">
+          {cardData.appearance.format("DD/MM/YYYY")}
+        </span>
+        <span className="card-status">{cardData.status}</span>
         <EditAndExcludeIcons
           editModal={openEditModal}
           excludeModal={excludeModal}
         />
         {contextHolder}
       </div>
-      <span className="card-title">Titulo do card</span>
-      <span className="card-company-name">Nome da empresa</span>
+
+      <span className="card-title">{cardData.title}</span>
+      <span className="card-company-name">{cardData.company}</span>
       <textarea
         className="card-description"
         spellCheck="false"
-        defaultValue={`descricao grande ou nao aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-        `}
+        defaultValue={cardData.description}
         disabled={true}
       />
       <ModalCreateOrEditCard
         open={isEditModalOpen}
         onCancel={() => setIsEditModalOpen(false)}
-        title="Editar card"
+        headerText="Editar card"
+        cardData={cardData}
       />
     </div>
   );

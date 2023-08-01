@@ -1,16 +1,16 @@
 .company-items {
   display: flex;
   border-radius: 8px;
-  padding: 6px 0;
+  padding: 6px;
   width: 60vw;
   justify-content: space-between;
   margin-bottom: 6px;
-  background-color: #4c94c4;
+  background-color: #4e4cc4;
 }
 
 .company-items:hover {
   transition: background-color 0.3s;
-  background-color: #83c1ea;
+  background-color: #707ad6;
 }
 
 .company-icons {

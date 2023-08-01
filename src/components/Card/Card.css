@@ -6,19 +6,24 @@
   margin: 20px 10px 10px 10px;
   border-radius: 10px;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  box-shadow: 0 2px 4px #fff;
+}
+
+.card-container:hover {
+  transition: box-shadow 0.3s;
+  box-shadow: 0 4px 6px #fff;
 }
 
 .red-gradient {
-  background: linear-gradient(180deg, #632121 0%, #721919 57.81%, #ab1212 100%);
+  background: linear-gradient(180deg, #411111 0%, #971b1b 57.81%, #c40c0c 100%);
 }
 
 .yellow-gradient {
-  background: linear-gradient(180deg, #633f21 0%, #727219 57.81%, #9cab12 100%);
+  background: linear-gradient(180deg, #66591d 0%, #8d8d1b 57.81%, #c4c715 100%);
 }
 
 .green-gradient {
-  background: linear-gradient(180deg, #396321 0%, #487219 57.81%, #28aa08 100%);
+  background: linear-gradient(180deg, #244e0c 0%, #598d1d 57.81%, #28aa08 100%);
 }
 
 .card-header {
@@ -26,12 +31,18 @@
   width: 100%;
   align-items: center;
   justify-content: space-between;
+  width: 98%;
 }
 
 .card-apperrence-date {
   font-weight: bold;
-  margin-left: 8px;
   font-size: 0.8em;
+}
+
+.card-status {
+  margin-bottom: 8px;
+  align-self: flex-end;
+  font-size: 0.7em;
 }
 
 .card-title {

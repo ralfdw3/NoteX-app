@@ -1,5 +1,8 @@
+import { ICard } from "./ICard";
+
 export interface IModalCard {
   open: boolean;
   onCancel: () => void;
-  title: string;
+  headerText: string;
+  cardData?: ICard;
 }
