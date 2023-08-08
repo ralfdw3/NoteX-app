@@ -2,3 +2,11 @@
   width: 30vw;
   margin: 3vh 20px;
 }
+
+.company-pagination {
+  display: flex;
+  height: 10vh;
+  background-color: #fff;
+  align-items: center;
+  justify-content: center;
+}

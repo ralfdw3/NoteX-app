@@ -4,60 +4,78 @@ import { IModalCard } from "../../../common/interfaces/IModalCard";
 import "./CreateOrEditCard.css";
 import { useState, useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { useLocation } from "react-router-dom";
+import AlertError from "../../AlertCustom";
 
 const ModalCreateOrEditCard: React.FC<IModalCard> = ({
   open,
   onCancel,
   headerText,
   cardData,
+  isNewCard,
 }) => {
   const { TextArea } = Input;
-  const location = useLocation();
 
-  const [id, setId] = useState(0);
+  const [id, setId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [apperrence, setApperrence] = useState<Dayjs>(dayjs());
-  const [company, setCompany] = useState("");
+  const [appearance, setAppearance] = useState<Dayjs>(dayjs());
+  const [companyName, setCompanyName] = useState<string | undefined>("");
+  const [companyCode, setCompanyCode] = useState("");
   const [status, setStatus] = useState("");
+  const [errorAlertVisible, setErrorAlertVisible] = useState(false);
 
   useEffect(() => {
     if (cardData != null) {
       setId(cardData.id);
       setTitle(cardData.title);
       setDescription(cardData.description ?? "");
-      setApperrence(cardData.appearance);
-      setCompany(cardData.company);
+      setAppearance(cardData.appearance);
+      setCompanyCode(cardData.company.code);
+      setCompanyName(cardData.company.name);
       setStatus(cardData.status);
     } else {
-      setApperrence(dayjs());
+      setId("");
+      setTitle("");
+      setDescription("");
+      setCompanyCode("");
+      setCompanyName("");
+      setStatus("");
+      setAppearance(dayjs());
     }
   }, [cardData]);
+
+  useEffect(() => {
+    if (errorAlertVisible) {
+      const timer = setTimeout(() => {
+        setErrorAlertVisible(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorAlertVisible]);
 
   const handleSaveCard = () => {
     const formData = {
       id,
       title,
       description,
-      apperrence,
-      company,
+      appearance,
+      companyCode,
+      companyName,
+      status,
     };
     fetch("http://localhost:8080/v1/card", {
-      method: location.state?.card ? "PATCH" : "POST",
+      method: isNewCard ? "POST" : "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        alert("Card salvo");
+      .then(() => {
+        onCancel();
       })
-      .catch((error) => {
-        console.error(error);
-        alert("Erro ao salvar o card");
+      .catch(() => {
+        setErrorAlertVisible(true);
       });
   };
 
@@ -65,6 +83,13 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
     <Modal open={open} footer={null} onCancel={onCancel} width={700} centered>
       <Content className="modal-edit-content">
         <h1>{headerText}</h1>
+        {errorAlertVisible && (
+          <AlertError
+            type="error"
+            message="Erro na requisição"
+            description="Verifique se todos os campos foram preenchidos. Caso o código da empresa não for encontrado no banco de dados, o nome da mesma deve ser informado."
+          />
+        )}
         <Select
           className="modal-input"
           showSearch
@@ -82,25 +107,19 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
           }
           options={[
             {
-              value: "1",
+              value: "0",
               label: "ABERTO",
             },
             {
-              value: "2",
-              label: "EM NEGOCIAÇÃO",
+              value: "1",
+              label: "EM NEGOCIACAO",
             },
             {
-              value: "3",
+              value: "2",
               label: "CONCLUIDO",
             },
           ]}
-        />
-
-        <Input
-          className="modal-input"
-          placeholder="Código da empresa.."
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
+          onChange={(value: string) => setStatus(value)}
         />
         <Input
           className="modal-input"
@@ -108,7 +127,18 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-
+        <Input
+          className="modal-input"
+          placeholder="Nome da empresa.."
+          value={companyName}
+          onChange={(e) => setCompanyName(e.target.value)}
+        />
+        <Input
+          className="modal-input"
+          placeholder="Código da empresa.."
+          value={companyCode}
+          onChange={(e) => setCompanyCode(e.target.value)}
+        />
         <TextArea
           className="modal-input"
           rows={4}
@@ -120,10 +150,10 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
         <DatePicker
           className="modal-input"
           style={{ width: "300px" }}
-          defaultValue={dayjs(apperrence)}
+          defaultValue={dayjs(appearance)}
           placeholder="Selecione uma data"
           format="DD/MM/YYYY"
-          onChange={(date: Dayjs | null) => setApperrence(date ?? dayjs())}
+          onChange={(date: Dayjs | null) => setAppearance(date ?? dayjs())}
         />
       </Content>
       <Content className="modal-edit-content-buttons">
