@@ -18,14 +18,10 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
       method: "DELETE",
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log("empresa deletada: " + data);
+      .then(() => {
         getAllActiveCompanies();
       })
       .catch((error) => {
-        console.log(
-          "http://localhost:8080/v1/company?code=" + `${companyData.code}`
-        );
         console.error(error);
       });
   };

@@ -9,11 +9,13 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
   onCancel,
   companyData,
 }) => {
-  const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  const [name, setName] = useState<string | undefined>("");
   const [code, setCode] = useState("");
 
   useEffect(() => {
     if (companyData != null) {
+      setId(companyData.id);
       setName(companyData.name);
       setCode(companyData.code);
     }
@@ -21,6 +23,7 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
 
   const handleSaveCard = () => {
     const formData = {
+      id,
       name,
       code,
     };
@@ -33,12 +36,15 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(formData);
         console.log(data);
+
         onCancel();
       })
       .catch((error) => {
+        console.log(formData);
         console.error(error);
-        alert("Erro ao salvar o card");
+        alert("Erro ao alterar os dados da empresa.");
       });
   };
 

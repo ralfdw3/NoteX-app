@@ -16,10 +16,11 @@ const CompanyList = ({
       {allActiveCompanies.map((company) => (
         <CompanyItem
           companyData={{
+            id: company.id,
             name: company.name,
             code: company.code,
           }}
-          key={company.code}
+          key={company.id}
           getAllActiveCompanies={getAllActiveCompanies}
         />
       ))}
