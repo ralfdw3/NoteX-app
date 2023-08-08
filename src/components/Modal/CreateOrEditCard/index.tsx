@@ -4,6 +4,7 @@ import { IModalCard } from "../../../common/interfaces/IModalCard";
 import "./CreateOrEditCard.css";
 import { useState, useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import AlertError from "../../AlertCustom";
 
 const ModalCreateOrEditCard: React.FC<IModalCard> = ({
   open,
@@ -14,13 +15,14 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
 }) => {
   const { TextArea } = Input;
 
-  const [id, setId] = useState(0);
+  const [id, setId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [appearance, setAppearance] = useState<Dayjs>(dayjs());
-  const [companyName, setCompanyName] = useState("");
+  const [companyName, setCompanyName] = useState<string | undefined>("");
   const [companyCode, setCompanyCode] = useState("");
-  const [status, setStatus] = useState<string | undefined>("");
+  const [status, setStatus] = useState("");
+  const [errorAlertVisible, setErrorAlertVisible] = useState(false);
 
   useEffect(() => {
     if (cardData != null) {
@@ -32,9 +34,24 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
       setCompanyName(cardData.company.name);
       setStatus(cardData.status);
     } else {
+      setId("");
+      setTitle("");
+      setDescription("");
+      setCompanyCode("");
+      setCompanyName("");
+      setStatus("");
       setAppearance(dayjs());
     }
   }, [cardData]);
+
+  useEffect(() => {
+    if (errorAlertVisible) {
+      const timer = setTimeout(() => {
+        setErrorAlertVisible(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorAlertVisible]);
 
   const handleSaveCard = () => {
     const formData = {
@@ -54,16 +71,11 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log("formData");
-        console.log(formData);
-        console.log("retorno data");
-        console.log(data);
+      .then(() => {
         onCancel();
       })
-      .catch((error) => {
-        console.error(error);
-        alert("Erro ao salvar o card");
+      .catch(() => {
+        setErrorAlertVisible(true);
       });
   };
 
@@ -71,6 +83,13 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
     <Modal open={open} footer={null} onCancel={onCancel} width={700} centered>
       <Content className="modal-edit-content">
         <h1>{headerText}</h1>
+        {errorAlertVisible && (
+          <AlertError
+            type="error"
+            message="Erro na requisição"
+            description="Verifique se todos os campos foram preenchidos. Caso o código da empresa não for encontrado no banco de dados, o nome da mesma deve ser informado."
+          />
+        )}
         <Select
           className="modal-input"
           showSearch
@@ -100,7 +119,7 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
               label: "CONCLUIDO",
             },
           ]}
-          onChange={(value: string | undefined) => setStatus(value)}
+          onChange={(value: string) => setStatus(value)}
         />
         <Input
           className="modal-input"

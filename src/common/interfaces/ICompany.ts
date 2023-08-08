@@ -1,4 +1,4 @@
 export interface ICompany {
-  name: string;
+  name?: string;
   code: string;
 }

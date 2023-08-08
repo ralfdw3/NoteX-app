@@ -24,7 +24,6 @@ const Card: React.FC<ICardProps> = ({ cardData, getAllActiveCards }) => {
         getAllActiveCards();
       })
       .catch((error) => {
-        console.log(cardData.id);
         console.error(error);
       });
   };
