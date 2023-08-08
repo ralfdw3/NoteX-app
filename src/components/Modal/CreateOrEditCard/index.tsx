@@ -4,34 +4,35 @@ import { IModalCard } from "../../../common/interfaces/IModalCard";
 import "./CreateOrEditCard.css";
 import { useState, useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { useLocation } from "react-router-dom";
 
 const ModalCreateOrEditCard: React.FC<IModalCard> = ({
   open,
   onCancel,
   headerText,
   cardData,
+  isNewCard,
 }) => {
   const { TextArea } = Input;
-  const location = useLocation();
 
   const [id, setId] = useState(0);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [apperrence, setApperrence] = useState<Dayjs>(dayjs());
-  const [company, setCompany] = useState("");
-  const [status, setStatus] = useState("");
+  const [appearance, setAppearance] = useState<Dayjs>(dayjs());
+  const [companyName, setCompanyName] = useState("");
+  const [companyCode, setCompanyCode] = useState("");
+  const [status, setStatus] = useState<string | undefined>("");
 
   useEffect(() => {
     if (cardData != null) {
       setId(cardData.id);
       setTitle(cardData.title);
       setDescription(cardData.description ?? "");
-      setApperrence(cardData.appearance);
-      setCompany(cardData.company);
+      setAppearance(cardData.appearance);
+      setCompanyCode(cardData.company.code);
+      setCompanyName(cardData.company.name);
       setStatus(cardData.status);
     } else {
-      setApperrence(dayjs());
+      setAppearance(dayjs());
     }
   }, [cardData]);
 
@@ -40,11 +41,13 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
       id,
       title,
       description,
-      apperrence,
-      company,
+      appearance,
+      companyCode,
+      companyName,
+      status,
     };
     fetch("http://localhost:8080/v1/card", {
-      method: location.state?.card ? "PATCH" : "POST",
+      method: isNewCard ? "POST" : "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
@@ -52,8 +55,11 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log("formData");
+        console.log(formData);
+        console.log("retorno data");
         console.log(data);
-        alert("Card salvo");
+        onCancel();
       })
       .catch((error) => {
         console.error(error);
@@ -82,25 +88,19 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
           }
           options={[
             {
-              value: "1",
+              value: "0",
               label: "ABERTO",
             },
             {
-              value: "2",
-              label: "EM NEGOCIAÇÃO",
+              value: "1",
+              label: "EM NEGOCIACAO",
             },
             {
-              value: "3",
+              value: "2",
               label: "CONCLUIDO",
             },
           ]}
-        />
-
-        <Input
-          className="modal-input"
-          placeholder="Código da empresa.."
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
+          onChange={(value: string | undefined) => setStatus(value)}
         />
         <Input
           className="modal-input"
@@ -108,7 +108,18 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-
+        <Input
+          className="modal-input"
+          placeholder="Nome da empresa.."
+          value={companyName}
+          onChange={(e) => setCompanyName(e.target.value)}
+        />
+        <Input
+          className="modal-input"
+          placeholder="Código da empresa.."
+          value={companyCode}
+          onChange={(e) => setCompanyCode(e.target.value)}
+        />
         <TextArea
           className="modal-input"
           rows={4}
@@ -120,10 +131,10 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
         <DatePicker
           className="modal-input"
           style={{ width: "300px" }}
-          defaultValue={dayjs(apperrence)}
+          defaultValue={dayjs(appearance)}
           placeholder="Selecione uma data"
           format="DD/MM/YYYY"
-          onChange={(date: Dayjs | null) => setApperrence(date ?? dayjs())}
+          onChange={(date: Dayjs | null) => setAppearance(date ?? dayjs())}
         />
       </Content>
       <Content className="modal-edit-content-buttons">

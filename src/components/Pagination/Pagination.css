@@ -1,0 +1,21 @@
+.list-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4vh;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: pre;
+}
+
+.arrow {
+  transition: color 0.3s ease;
+}
+
+.arrow:hover {
+  color: #555;
+}
+
+.list-pagination:hover div {
+  cursor: pointer;
+}

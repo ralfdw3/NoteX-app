@@ -1,26 +1,28 @@
-import { Pagination } from "antd";
 import CompanyItem from "../CompanyItem";
 import "./CompanyList.css";
+import { ICompany } from "../../../common/interfaces/ICompany";
 
-const CompanyList = () => {
+interface ActiveCompaniesListProps {
+  allActiveCompanies: ICompany[];
+  getAllActiveCompanies: () => void;
+}
+
+const CompanyList = ({
+  allActiveCompanies,
+  getAllActiveCompanies,
+}: ActiveCompaniesListProps) => {
   return (
     <div className="company-list">
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <CompanyItem />
-      <Pagination defaultCurrent={1} total={15} pageSize={15} />
+      {allActiveCompanies.map((company) => (
+        <CompanyItem
+          companyData={{
+            name: company.name,
+            code: company.code,
+          }}
+          key={company.code}
+          getAllActiveCompanies={getAllActiveCompanies}
+        />
+      ))}
     </div>
   );
 };

@@ -1,10 +1,11 @@
 import { Dayjs } from "dayjs";
+import { ICompany } from "./ICompany";
 
 export interface ICard {
-  id: number;
+  id: string;
   title: string;
   status: string;
   description?: string;
   appearance: Dayjs;
-  company: string;
+  company: ICompany;
 }

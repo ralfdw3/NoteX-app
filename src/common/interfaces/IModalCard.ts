@@ -5,4 +5,5 @@ export interface IModalCard {
   onCancel: () => void;
   headerText: string;
   cardData?: ICard;
+  isNewCard: boolean;
 }

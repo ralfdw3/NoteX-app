@@ -1,17 +1,34 @@
 import "./Card.css";
-import EditAndExcludeIcons from "../EditAndExcludeIcons";
-import { useState } from "react";
-import ModalCreateOrEditCard from "../Modal/CreateOrEditCard";
+import EditAndExcludeIcons from "../../../components/EditAndExcludeIcons";
+import { useState, useEffect } from "react";
+import ModalCreateOrEditCard from "../../../components/Modal/CreateOrEditCard";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
-import { ICard } from "../../common/interfaces/ICard";
+import { ICard } from "../../../common/interfaces/ICard";
 import dayjs from "dayjs";
 
 interface ICardProps {
   cardData: ICard;
+  getAllActiveCards: () => void;
 }
 
-const Card: React.FC<ICardProps> = ({ cardData }) => {
+const Card: React.FC<ICardProps> = ({ cardData, getAllActiveCards }) => {
+  const handleDeleteCard = () => {
+    fetch(`http://localhost:8080/v1/card?id=${cardData.id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("card deletado");
+        console.log(data);
+        getAllActiveCards();
+      })
+      .catch((error) => {
+        console.log(cardData.id);
+        console.error(error);
+      });
+  };
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -25,10 +42,11 @@ const Card: React.FC<ICardProps> = ({ cardData }) => {
       content: "Você tem certeza que deseja excluir o card?",
       okText: "Sim",
       cancelText: "Cancelar",
+      onOk: handleDeleteCard,
     });
   };
 
-  const diffInDays = cardData.appearance.diff(dayjs(), "day");
+  const diffInDays = dayjs(cardData.appearance).diff(dayjs(), "day");
 
   let gradient;
   if (diffInDays < -7) {
@@ -39,26 +57,31 @@ const Card: React.FC<ICardProps> = ({ cardData }) => {
     gradient = "yellow-gradient";
   }
 
+  useEffect(() => {
+    getAllActiveCards();
+  }, [isEditModalOpen]);
+
   return (
     <div className={`card-container ${gradient}`}>
       <div className="card-header">
         <span className="card-apperrence-date">
-          {cardData.appearance.format("DD/MM/YYYY")}
+          {dayjs(cardData.appearance).format("DD/MM/YYYY")}
         </span>
         <span className="card-status">{cardData.status}</span>
         <EditAndExcludeIcons
           editModal={openEditModal}
           excludeModal={excludeModal}
         />
-        {contextHolder}
       </div>
-
+      {contextHolder}
       <span className="card-title">{cardData.title}</span>
-      <span className="card-company-name">{cardData.company}</span>
+      <span className="card-company-name">
+        {cardData.company.code} - {cardData.company.name}
+      </span>
       <textarea
         className="card-description"
         spellCheck="false"
-        defaultValue={cardData.description}
+        value={cardData.description}
         disabled={true}
       />
       <ModalCreateOrEditCard
@@ -66,6 +89,7 @@ const Card: React.FC<ICardProps> = ({ cardData }) => {
         onCancel={() => setIsEditModalOpen(false)}
         headerText="Editar card"
         cardData={cardData}
+        isNewCard={false}
       />
     </div>
   );
