@@ -1,11 +1,12 @@
 import EditAndExcludeIcons from "../../../components/EditAndExcludeIcons";
-import { AiFillDownCircle } from "react-icons/ai";
+import { AiOutlineHistory } from "react-icons/ai";
 import "./CompanyItem.css";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { ICompany } from "../../../common/interfaces/ICompany";
 import { Modal } from "antd";
 import { useState, useEffect } from "react";
 import ModalEditCompany from "../../../components/Modal/EditCompany";
+import ModalCardHistory from "../../../components/Modal/CardHistory";
 
 interface ICompanyProps {
   companyData: ICompany;
@@ -31,6 +32,8 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
     setIsEditModalOpen(true);
   };
 
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+
   const [modal, contextHolder] = Modal.useModal();
   const excludeCompanyModal = () => {
     modal.confirm({
@@ -47,6 +50,43 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
     getAllActiveCompanies();
   }, [isEditModalOpen]);
 
+  const [allCompanyCards, setAllCompanyCards] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [pageNumber, setPageNumber] = useState(0);
+
+  const handlePageNumber = (newPageNumber: number) => {
+    console.log("pagina");
+    setPageNumber(newPageNumber);
+  };
+  const getAllCompanyCards = (id: string) => {
+    fetch(
+      "http://localhost:8080/v1/card/all/?page=" +
+        `${"0"}` +
+        "&size=10&sort=creation,asc&companyId=" +
+        `${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) =>
+        response.json().then((data) => {
+          console.log(data);
+          setAllCompanyCards(data.content);
+          setTotalPages(data.totalPages);
+        })
+      )
+      .catch((error) => {
+        alert("Erro ao buscar todos os cards de uma empresa. " + error);
+      });
+  };
+
+  useEffect(() => {
+    getAllCompanyCards(companyData.id);
+  }, [isHistoryModalOpen]);
+
   return (
     <div className="company-items">
       <div>
@@ -55,7 +95,11 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
         <span>{companyData.name}</span>
       </div>
       <div className="company-icons">
-        <AiFillDownCircle size={25} className="company-cards-icon" />
+        <AiOutlineHistory
+          size={25}
+          className="company-cards-icon"
+          onClick={() => setIsHistoryModalOpen(true)}
+        />
         <EditAndExcludeIcons
           editModal={openEditModal}
           excludeModal={excludeCompanyModal}
@@ -66,6 +110,16 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
         open={isEditModalOpen}
         onCancel={() => setIsEditModalOpen(false)}
         companyData={companyData}
+      />
+      <ModalCardHistory
+        companyId={companyData.id}
+        companyName={companyData.name}
+        onCancel={() => setIsHistoryModalOpen(false)}
+        open={isHistoryModalOpen}
+        allCompanyCards={allCompanyCards}
+        totalPages={totalPages}
+        pageNumber={pageNumber}
+        handlePageNumber={() => handlePageNumber}
       />
     </div>
   );

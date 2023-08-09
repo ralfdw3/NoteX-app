@@ -39,6 +39,31 @@ const Company = () => {
       });
   };
 
+  const getCompaniesBySearchTerm = (searchTerm: string) => {
+    fetch(
+      "http://localhost:8080/v1/company?page=" +
+        `${pageNumber}` +
+        "&size=10&sort=creation,asc&searchTerm=" +
+        `${searchTerm}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) =>
+        response.json().then((data) => {
+          setAllActiveCompanies(data.content);
+          setTotalPages(data.totalPages);
+        })
+      )
+      .catch((error) => {
+        console.log();
+        alert("Erro ao buscar as empresas ativas. " + error);
+      });
+  };
+
   useEffect(() => {
     getAllActiveCompanies();
   }, [pageNumber]);
@@ -49,7 +74,7 @@ const Company = () => {
       <Input.Search
         className="search-input"
         placeholder="Digite aqui..."
-        onSearch={(value) => console.log(value)}
+        onSearch={(value) => getCompaniesBySearchTerm(value)}
       />
       <CompanyList
         allActiveCompanies={allActiveCompanies}

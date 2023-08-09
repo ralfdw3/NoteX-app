@@ -21,6 +21,7 @@ const ActiveCardsList = ({
             description: card.description,
             appearance: card.appearance,
             company: {
+              id: card.company.id,
               code: card.company.code,
               name: card.company.name,
             },

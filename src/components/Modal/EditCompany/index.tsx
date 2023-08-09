@@ -65,6 +65,7 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
           onChange={(e) => setCode(e.target.value)}
         />
       </Content>
+
       <Content className="modal-edit-content-buttons">
         <Button className="modal-edit-content-button" onClick={onCancel}>
           Cancelar
