@@ -1,12 +1,12 @@
-import EditAndExcludeIcons from "../../../components/EditAndExcludeIcons";
 import { AiOutlineHistory } from "react-icons/ai";
 import "./CompanyItem.css";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { ICompany } from "../../../common/interfaces/ICompany";
 import { Modal } from "antd";
 import { useState, useEffect } from "react";
-import ModalEditCompany from "../../../components/Modal/EditCompany";
-import ModalCardHistory from "../../../components/Modal/CardHistory";
+import { ICompany } from "../../common/interfaces/ICompany";
+import EditAndExcludeIcons from "../EditAndExcludeIcons";
+import ModalCardHistory from "../Modal/CardHistory";
+import ModalEditCompany from "../Modal/EditCompany";
 
 interface ICompanyProps {
   companyData: ICompany;
@@ -50,43 +50,6 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
     getAllActiveCompanies();
   }, [isEditModalOpen]);
 
-  const [allCompanyCards, setAllCompanyCards] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
-  const [pageNumber, setPageNumber] = useState(0);
-
-  const handlePageNumber = (newPageNumber: number) => {
-    console.log("pagina");
-    setPageNumber(newPageNumber);
-  };
-  const getAllCompanyCards = (id: string) => {
-    fetch(
-      "http://localhost:8080/v1/card/all/?page=" +
-        `${"0"}` +
-        "&size=10&sort=creation,asc&companyId=" +
-        `${id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) =>
-        response.json().then((data) => {
-          console.log(data);
-          setAllCompanyCards(data.content);
-          setTotalPages(data.totalPages);
-        })
-      )
-      .catch((error) => {
-        alert("Erro ao buscar todos os cards de uma empresa. " + error);
-      });
-  };
-
-  useEffect(() => {
-    getAllCompanyCards(companyData.id);
-  }, [isHistoryModalOpen]);
-
   return (
     <div className="company-items">
       <div>
@@ -113,13 +76,10 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
       />
       <ModalCardHistory
         companyId={companyData.id}
+        companyCode={companyData.code}
         companyName={companyData.name}
         onCancel={() => setIsHistoryModalOpen(false)}
         open={isHistoryModalOpen}
-        allCompanyCards={allCompanyCards}
-        totalPages={totalPages}
-        pageNumber={pageNumber}
-        handlePageNumber={() => handlePageNumber}
       />
     </div>
   );

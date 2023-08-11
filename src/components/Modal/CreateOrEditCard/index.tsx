@@ -16,7 +16,6 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
   const { TextArea } = Input;
 
   const [id, setId] = useState("");
-  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [appearance, setAppearance] = useState<Dayjs>(dayjs());
   const [companyName, setCompanyName] = useState<string | undefined>("");
@@ -27,7 +26,6 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
   useEffect(() => {
     if (cardData != null) {
       setId(cardData.id);
-      setTitle(cardData.title);
       setDescription(cardData.description ?? "");
       setAppearance(cardData.appearance);
       setCompanyCode(cardData.company.code);
@@ -35,7 +33,6 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
       setStatus(cardData.status);
     } else {
       setId("");
-      setTitle("");
       setDescription("");
       setCompanyCode("");
       setCompanyName("");
@@ -56,7 +53,6 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
   const handleSaveCard = () => {
     const formData = {
       id,
-      title,
       description,
       appearance,
       companyCode,
@@ -120,12 +116,6 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
             },
           ]}
           onChange={(value: string) => setStatus(value)}
-        />
-        <Input
-          className="modal-input"
-          placeholder="Título do card.."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
         />
         <Input
           className="modal-input"

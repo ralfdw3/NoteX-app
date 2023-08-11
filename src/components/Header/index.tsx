@@ -10,6 +10,9 @@ const Header = () => {
       <Link to="/empresas" className="header-button">
         Empresas
       </Link>
+      <Link to="/empresas-inadimplentes" className="header-button">
+        Inadimplentes
+      </Link>
     </section>
   );
 };

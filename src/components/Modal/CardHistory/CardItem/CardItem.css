@@ -1,2 +1,26 @@
 .item-card-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  padding: 1%;
+  margin: 1%;
+  background-color: #eee6e6;
+}
+
+.item-card-container:hover {
+  transition: background-color 0.3s;
+  background-color: #cec9c9;
+}
+
+.item-card-container-status {
+  width: 17.5%;
+}
+
+.item-card-container-title {
+  width: 50%;
+}
+
+.item-card-container-icon {
+  cursor: pointer;
 }

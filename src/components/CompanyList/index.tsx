@@ -1,6 +1,6 @@
-import CompanyItem from "../CompanyItem";
 import "./CompanyList.css";
-import { ICompany } from "../../../common/interfaces/ICompany";
+import { ICompany } from "../../common/interfaces/ICompany";
+import CompanyItem from "../CompanyItem";
 
 interface ActiveCompaniesListProps {
   allActiveCompanies: ICompany[];

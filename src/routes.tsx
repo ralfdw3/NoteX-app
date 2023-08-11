@@ -4,6 +4,7 @@ import "./styles/global.css";
 import Home from "./pages/Home";
 import React from "react";
 import Company from "./pages/Company";
+import CompanyOverdue from "./pages/CompanyOverdue";
 
 export default function AppRoutes() {
   return (
@@ -11,6 +12,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/empresas" element={<Company />} />
+        <Route path="/empresas-inadimplentes" element={<CompanyOverdue />} />
       </Routes>
     </BrowserRouter>
   );

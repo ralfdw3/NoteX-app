@@ -1,11 +1,11 @@
 import Header from "../../components/Header";
-import "./Company.css";
+import "./CompanyOverdue.css";
 import { Input } from "antd";
-import CompanyList from "../../components/CompanyList";
 import { useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
+import CompanyList from "../../components/CompanyList";
 
-const Company = () => {
+const CompanyOverdue = () => {
   const [allActiveCompanies, setAllActiveCompanies] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -88,4 +88,4 @@ const Company = () => {
     </section>
   );
 };
-export default Company;
+export default CompanyOverdue;

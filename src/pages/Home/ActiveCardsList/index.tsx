@@ -20,12 +20,13 @@ const ActiveCardsList = ({
             title: card.title,
             description: card.description,
             appearance: card.appearance,
+            status: card.status,
+            creation: card.creation,
             company: {
               id: card.company.id,
               code: card.company.code,
               name: card.company.name,
             },
-            status: card.status,
           }}
           getAllActiveCards={getAllActiveCards}
           key={card.id}
