@@ -103,15 +103,15 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
           }
           options={[
             {
-              value: "0",
+              value: "ABERTO",
               label: "ABERTO",
             },
             {
-              value: "1",
+              value: "EM_NEGOCIACAO",
               label: "EM NEGOCIACAO",
             },
             {
-              value: "2",
+              value: "CONCLUIDO",
               label: "CONCLUIDO",
             },
           ]}

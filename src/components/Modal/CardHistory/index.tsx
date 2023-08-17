@@ -9,9 +9,7 @@ import { getAllCompanyCards } from "../../../services/getAllCompanyCards";
 const ModalCardHistory: React.FC<IModalCardHistory> = ({
   open,
   onCancel,
-  companyId,
-  companyCode,
-  companyName,
+  company,
 }) => {
   const [allCompanyCards, setAllCompanyCards] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
@@ -32,7 +30,7 @@ const ModalCardHistory: React.FC<IModalCardHistory> = ({
   };
 
   useEffect(() => {
-    getCompanies(pageNumber, companyId);
+    getCompanies(pageNumber, company.id);
   }, [open, pageNumber]);
 
   return (
@@ -40,7 +38,7 @@ const ModalCardHistory: React.FC<IModalCardHistory> = ({
       <Content className="modal-history-content">
         <h1>Histórico de cards</h1>
         <h2>
-          {companyCode} - {companyName}
+          {company.code} - {company.name}
         </h2>
         <AllCompanyCardsList allCompanyCards={allCompanyCards} />
         <Pagination

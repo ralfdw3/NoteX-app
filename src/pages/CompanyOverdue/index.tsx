@@ -16,7 +16,7 @@ const CompanyOverdue = () => {
 
   const getAllActiveCompanies = () => {
     fetch(
-      "http://localhost:8080/v1/company/all/active?page=" +
+      "http://localhost:8080/v1/company/all/overdue?page=" +
         `${pageNumber}` +
         "&size=10&sort=creation,asc",
       {
@@ -35,13 +35,13 @@ const CompanyOverdue = () => {
       )
       .catch((error) => {
         console.log();
-        alert("Erro ao buscar as empresas ativas. " + error);
+        alert("Erro ao buscar as empresas inadimplentes. " + error);
       });
   };
 
   const getCompaniesBySearchTerm = (searchTerm: string) => {
     fetch(
-      "http://localhost:8080/v1/company?page=" +
+      "http://localhost:8080/v1/company/overdues?page=" +
         `${pageNumber}` +
         "&size=10&sort=creation,asc&searchTerm=" +
         `${searchTerm}`,

@@ -15,9 +15,12 @@ interface ICompanyProps {
 
 const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
   const handleDeleteCompany = () => {
-    fetch(`http://localhost:8080/v1/company?code=${companyData.code}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `http://localhost:8080/v1/company?code=${companyData.code}&status=INATIVO`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => response.json())
       .then(() => {
         getAllActiveCompanies();
@@ -75,9 +78,7 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
         companyData={companyData}
       />
       <ModalCardHistory
-        companyId={companyData.id}
-        companyCode={companyData.code}
-        companyName={companyData.name}
+        company={companyData}
         onCancel={() => setIsHistoryModalOpen(false)}
         open={isHistoryModalOpen}
       />

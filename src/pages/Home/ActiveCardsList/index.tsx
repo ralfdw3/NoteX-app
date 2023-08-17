@@ -15,19 +15,7 @@ const ActiveCardsList = ({
     <div className="active-cards-container">
       {allActiveCards.map((card) => (
         <Card
-          cardData={{
-            id: card.id,
-            title: card.title,
-            description: card.description,
-            appearance: card.appearance,
-            status: card.status,
-            creation: card.creation,
-            company: {
-              id: card.company.id,
-              code: card.company.code,
-              name: card.company.name,
-            },
-          }}
+          cardData={card}
           getAllActiveCards={getAllActiveCards}
           key={card.id}
         />
