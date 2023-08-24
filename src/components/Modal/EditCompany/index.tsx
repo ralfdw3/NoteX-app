@@ -12,6 +12,8 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
   const [id, setId] = useState("");
   const [name, setName] = useState<string | undefined>("");
   const [code, setCode] = useState("");
+  const [phone, setPhone] = useState<string | undefined>("");
+  const [email, setEmail] = useState<string | undefined>("");
   const [status, setStatus] = useState("");
 
   useEffect(() => {
@@ -19,6 +21,8 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
       setId(companyData.id);
       setName(companyData.name);
       setCode(companyData.code);
+      setPhone(companyData.phone);
+      setEmail(companyData.email);
       setStatus(companyData.status);
     }
   }, [companyData]);
@@ -28,6 +32,8 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
       id,
       name,
       code,
+      phone,
+      email,
       status,
     };
     fetch("http://localhost:8080/v1/company", {
@@ -94,6 +100,18 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
           placeholder="Código da empresa.."
           value={code}
           onChange={(e) => setCode(e.target.value)}
+        />
+        <Input
+          className="modal-input"
+          placeholder="Telefone da empresa.."
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+        <Input
+          className="modal-input"
+          placeholder="E-mail da empresa.."
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </Content>
 

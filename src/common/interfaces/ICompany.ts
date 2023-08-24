@@ -3,4 +3,6 @@ export interface ICompany {
   name?: string;
   code: string;
   status: string;
+  phone?: string;
+  email?: string;
 }

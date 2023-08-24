@@ -20,6 +20,8 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
   const [appearance, setAppearance] = useState<Dayjs>(dayjs());
   const [companyName, setCompanyName] = useState<string | undefined>("");
   const [companyCode, setCompanyCode] = useState("");
+  const [companyPhone, setCompanyPhone] = useState<string | undefined>("");
+  const [companyEmail, setCompanyEmail] = useState<string | undefined>("");
   const [status, setStatus] = useState("");
   const [errorAlertVisible, setErrorAlertVisible] = useState(false);
 
@@ -30,12 +32,16 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
       setAppearance(cardData.appearance);
       setCompanyCode(cardData.company.code);
       setCompanyName(cardData.company.name);
+      setCompanyPhone(cardData.company.phone);
+      setCompanyEmail(cardData.company.email);
       setStatus(cardData.status);
     } else {
       setId("");
       setDescription("");
       setCompanyCode("");
       setCompanyName("");
+      setCompanyPhone("");
+      setCompanyEmail("");
       setStatus("");
       setAppearance(dayjs());
     }
@@ -57,6 +63,8 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
       appearance,
       companyCode,
       companyName,
+      companyPhone,
+      companyEmail,
       status,
     };
     fetch("http://localhost:8080/v1/card", {
@@ -128,6 +136,18 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
           placeholder="Código da empresa.."
           value={companyCode}
           onChange={(e) => setCompanyCode(e.target.value)}
+        />
+        <Input
+          className="modal-input"
+          placeholder="Telefone da empresa.."
+          value={companyPhone}
+          onChange={(e) => setCompanyPhone(e.target.value)}
+        />
+        <Input
+          className="modal-input"
+          placeholder="E-mail da empresa.."
+          value={companyEmail}
+          onChange={(e) => setCompanyEmail(e.target.value)}
         />
         <TextArea
           className="modal-input"
