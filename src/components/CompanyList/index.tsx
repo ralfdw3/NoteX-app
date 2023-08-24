@@ -1,6 +1,6 @@
-import CompanyItem from "../CompanyItem";
 import "./CompanyList.css";
-import { ICompany } from "../../../common/interfaces/ICompany";
+import { ICompany } from "../../common/interfaces/ICompany";
+import CompanyItem from "../CompanyItem";
 
 interface ActiveCompaniesListProps {
   allActiveCompanies: ICompany[];
@@ -15,11 +15,7 @@ const CompanyList = ({
     <div className="company-list">
       {allActiveCompanies.map((company) => (
         <CompanyItem
-          companyData={{
-            id: company.id,
-            name: company.name,
-            code: company.code,
-          }}
+          companyData={company}
           key={company.id}
           getAllActiveCompanies={getAllActiveCompanies}
         />

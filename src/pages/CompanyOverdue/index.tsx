@@ -1,11 +1,11 @@
 import Header from "../../components/Header";
-import "./Company.css";
+import "./CompanyOverdue.css";
 import { Input } from "antd";
-import CompanyList from "../../components/CompanyList";
 import { useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
+import CompanyList from "../../components/CompanyList";
 
-const Company = () => {
+const CompanyOverdue = () => {
   const [allActiveCompanies, setAllActiveCompanies] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -16,7 +16,7 @@ const Company = () => {
 
   const getAllActiveCompanies = () => {
     fetch(
-      "http://localhost:8080/v1/company/all/active?page=" +
+      "http://localhost:8080/v1/company/all/overdue?page=" +
         `${pageNumber}` +
         "&size=10&sort=creation,asc",
       {
@@ -35,13 +35,13 @@ const Company = () => {
       )
       .catch((error) => {
         console.log();
-        alert("Erro ao buscar as empresas ativas. " + error);
+        alert("Erro ao buscar as empresas inadimplentes. " + error);
       });
   };
 
   const getCompaniesBySearchTerm = (searchTerm: string) => {
     fetch(
-      "http://localhost:8080/v1/company/active?page=" +
+      "http://localhost:8080/v1/company/overdues?page=" +
         `${pageNumber}` +
         "&size=10&sort=creation,asc&searchTerm=" +
         `${searchTerm}`,
@@ -88,4 +88,4 @@ const Company = () => {
     </section>
   );
 };
-export default Company;
+export default CompanyOverdue;

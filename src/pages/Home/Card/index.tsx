@@ -19,7 +19,6 @@ const Card: React.FC<ICardProps> = ({ cardData, getAllActiveCards }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("card deletado");
         console.log(data);
         getAllActiveCards();
       })
@@ -73,7 +72,6 @@ const Card: React.FC<ICardProps> = ({ cardData, getAllActiveCards }) => {
         />
       </div>
       {contextHolder}
-      <span className="card-title">{cardData.title}</span>
       <span className="card-company-name">
         {cardData.company.code} - {cardData.company.name}
       </span>

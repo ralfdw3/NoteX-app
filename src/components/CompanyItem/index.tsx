@@ -1,11 +1,12 @@
-import EditAndExcludeIcons from "../../../components/EditAndExcludeIcons";
-import { AiFillDownCircle } from "react-icons/ai";
+import { AiOutlineHistory } from "react-icons/ai";
 import "./CompanyItem.css";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { ICompany } from "../../../common/interfaces/ICompany";
 import { Modal } from "antd";
 import { useState, useEffect } from "react";
-import ModalEditCompany from "../../../components/Modal/EditCompany";
+import { ICompany } from "../../common/interfaces/ICompany";
+import EditAndExcludeIcons from "../EditAndExcludeIcons";
+import ModalCardHistory from "../Modal/CardHistory";
+import ModalEditCompany from "../Modal/EditCompany";
 
 interface ICompanyProps {
   companyData: ICompany;
@@ -14,9 +15,12 @@ interface ICompanyProps {
 
 const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
   const handleDeleteCompany = () => {
-    fetch(`http://localhost:8080/v1/company?code=${companyData.code}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `http://localhost:8080/v1/company?code=${companyData.code}&status=INATIVO`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => response.json())
       .then(() => {
         getAllActiveCompanies();
@@ -30,6 +34,8 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
+
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
 
   const [modal, contextHolder] = Modal.useModal();
   const excludeCompanyModal = () => {
@@ -55,7 +61,11 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
         <span>{companyData.name}</span>
       </div>
       <div className="company-icons">
-        <AiFillDownCircle size={25} className="company-cards-icon" />
+        <AiOutlineHistory
+          size={25}
+          className="company-cards-icon"
+          onClick={() => setIsHistoryModalOpen(true)}
+        />
         <EditAndExcludeIcons
           editModal={openEditModal}
           excludeModal={excludeCompanyModal}
@@ -66,6 +76,11 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
         open={isEditModalOpen}
         onCancel={() => setIsEditModalOpen(false)}
         companyData={companyData}
+      />
+      <ModalCardHistory
+        company={companyData}
+        onCancel={() => setIsHistoryModalOpen(false)}
+        open={isHistoryModalOpen}
       />
     </div>
   );

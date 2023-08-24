@@ -1,4 +1,4 @@
-import { Modal, Input, Button } from "antd";
+import { Modal, Input, Button, Select } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { IModalCompany } from "../../../common/interfaces/IModalCompany";
 import { useState, useEffect } from "react";
@@ -12,12 +12,14 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
   const [id, setId] = useState("");
   const [name, setName] = useState<string | undefined>("");
   const [code, setCode] = useState("");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     if (companyData != null) {
       setId(companyData.id);
       setName(companyData.name);
       setCode(companyData.code);
+      setStatus(companyData.status);
     }
   }, [companyData]);
 
@@ -26,6 +28,7 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
       id,
       name,
       code,
+      status,
     };
     fetch("http://localhost:8080/v1/company", {
       method: "PATCH",
@@ -36,13 +39,10 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(formData);
         console.log(data);
-
         onCancel();
       })
       .catch((error) => {
-        console.log(formData);
         console.error(error);
         alert("Erro ao alterar os dados da empresa.");
       });
@@ -52,6 +52,37 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
     <Modal open={open} footer={null} onCancel={onCancel} width={700} centered>
       <Content className="modal-edit-content">
         <h1>Editar dados da empresa</h1>
+        <Select
+          className="modal-input"
+          showSearch
+          style={{ width: 200 }}
+          value={status}
+          placeholder="Selecione o status"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.label ?? "").includes(input)
+          }
+          filterSort={(optionA, optionB) =>
+            (optionA?.label ?? "")
+              .toLowerCase()
+              .localeCompare((optionB?.label ?? "").toLowerCase())
+          }
+          options={[
+            {
+              value: "ATIVO",
+              label: "ATIVO",
+            },
+            {
+              value: "INATIVO",
+              label: "INATIVO",
+            },
+            {
+              value: "INADIMPLENTE",
+              label: "INADIMPLENTE",
+            },
+          ]}
+          onChange={(value: string) => setStatus(value)}
+        />
         <Input
           className="modal-input"
           placeholder="Nome da empresa.."
@@ -65,6 +96,7 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
           onChange={(e) => setCode(e.target.value)}
         />
       </Content>
+
       <Content className="modal-edit-content-buttons">
         <Button className="modal-edit-content-button" onClick={onCancel}>
           Cancelar

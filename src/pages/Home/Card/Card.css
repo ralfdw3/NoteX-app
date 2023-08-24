@@ -45,14 +45,11 @@
   font-size: 0.7em;
 }
 
-.card-title {
+.card-company-name {
+  margin-bottom: 10px;
   font-size: 1.2em;
   font-weight: bold;
   border-bottom: 2px #fff solid;
-}
-
-.card-company-name {
-  padding: 10px;
 }
 
 .card-description {
