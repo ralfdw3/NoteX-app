@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import Header from "../../components/Header";
-import ModalCreateOrEditCard from "../../components/Modal/CreateOrEditCard";
+import ModalCreateCard from "../../components/Modal/CreateCard";
 import "./Home.css";
 import ActiveCardsList from "./ActiveCardsList";
 
@@ -52,7 +52,7 @@ const Home: React.FC = () => {
           getAllActiveCards={getAllActiveCards}
         />
       </div>
-      <ModalCreateOrEditCard
+      <ModalCreateCard
         open={isCreateCardModalOpen}
         onCancel={() => setIsCreateCardModalOpen(false)}
         headerText="Novo card"

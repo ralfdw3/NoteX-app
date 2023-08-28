@@ -1,51 +1,26 @@
 import { Modal, Input, DatePicker, Select, Button } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { IModalCard } from "../../../common/interfaces/IModalCard";
-import "./CreateOrEditCard.css";
 import { useState, useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import AlertError from "../../AlertCustom";
+import "./CreateCard.css";
 
-const ModalCreateOrEditCard: React.FC<IModalCard> = ({
+const ModalCreateCard: React.FC<IModalCard> = ({
   open,
   onCancel,
-  headerText,
   cardData,
-  isNewCard,
 }) => {
   const { TextArea } = Input;
 
-  const [id, setId] = useState("");
   const [description, setDescription] = useState("");
   const [appearance, setAppearance] = useState<Dayjs>(dayjs());
-  const [companyName, setCompanyName] = useState<string | undefined>("");
-  const [companyCode, setCompanyCode] = useState("");
-  const [companyPhone, setCompanyPhone] = useState<string | undefined>("");
-  const [companyEmail, setCompanyEmail] = useState<string | undefined>("");
+  const [name, setName] = useState<string | undefined>("");
+  const [code, setCode] = useState<number | undefined>();
+  const [phone, setPhone] = useState<string | undefined>("");
+  const [email, setEmail] = useState<string | undefined>("");
   const [status, setStatus] = useState("");
   const [errorAlertVisible, setErrorAlertVisible] = useState(false);
-
-  useEffect(() => {
-    if (cardData != null) {
-      setId(cardData.id);
-      setDescription(cardData.description ?? "");
-      setAppearance(cardData.appearance);
-      setCompanyCode(cardData.company.code);
-      setCompanyName(cardData.company.name);
-      setCompanyPhone(cardData.company.phone);
-      setCompanyEmail(cardData.company.email);
-      setStatus(cardData.status);
-    } else {
-      setId("");
-      setDescription("");
-      setCompanyCode("");
-      setCompanyName("");
-      setCompanyPhone("");
-      setCompanyEmail("");
-      setStatus("");
-      setAppearance(dayjs());
-    }
-  }, [cardData]);
 
   useEffect(() => {
     if (errorAlertVisible) {
@@ -57,18 +32,21 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
   }, [errorAlertVisible]);
 
   const handleSaveCard = () => {
+    const companyRequest = {
+      code,
+      name,
+      phone,
+      email,
+    };
+
     const formData = {
-      id,
       description,
       appearance,
-      companyCode,
-      companyName,
-      companyPhone,
-      companyEmail,
+      companyRequest,
       status,
     };
     fetch("http://localhost:8080/v1/card", {
-      method: isNewCard ? "POST" : "PATCH",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -86,7 +64,7 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
   return (
     <Modal open={open} footer={null} onCancel={onCancel} width={700} centered>
       <Content className="modal-edit-content">
-        <h1>{headerText}</h1>
+        <h1>Criar novo card</h1>
         {errorAlertVisible && (
           <AlertError
             type="error"
@@ -127,27 +105,27 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
         />
         <Input
           className="modal-input"
-          placeholder="Nome da empresa.."
-          value={companyName}
-          onChange={(e) => setCompanyName(e.target.value)}
+          placeholder="Código da empresa.."
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
         />
         <Input
           className="modal-input"
-          placeholder="Código da empresa.."
-          value={companyCode}
-          onChange={(e) => setCompanyCode(e.target.value)}
+          placeholder="Nome da empresa.."
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <Input
           className="modal-input"
           placeholder="Telefone da empresa.."
-          value={companyPhone}
-          onChange={(e) => setCompanyPhone(e.target.value)}
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
         />
         <Input
           className="modal-input"
           placeholder="E-mail da empresa.."
-          value={companyEmail}
-          onChange={(e) => setCompanyEmail(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <TextArea
           className="modal-input"
@@ -182,4 +160,4 @@ const ModalCreateOrEditCard: React.FC<IModalCard> = ({
   );
 };
 
-export default ModalCreateOrEditCard;
+export default ModalCreateCard;

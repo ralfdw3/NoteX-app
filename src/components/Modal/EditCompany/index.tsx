@@ -9,9 +9,9 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
   onCancel,
   companyData,
 }) => {
-  const [id, setId] = useState("");
+  const [id, setId] = useState<string | undefined>("");
   const [name, setName] = useState<string | undefined>("");
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(0);
   const [phone, setPhone] = useState<string | undefined>("");
   const [email, setEmail] = useState<string | undefined>("");
   const [status, setStatus] = useState("");
@@ -49,6 +49,7 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
         onCancel();
       })
       .catch((error) => {
+        console.log(formData);
         console.error(error);
         alert("Erro ao alterar os dados da empresa.");
       });

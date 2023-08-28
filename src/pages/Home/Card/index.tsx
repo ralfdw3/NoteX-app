@@ -1,11 +1,12 @@
 import "./Card.css";
 import EditAndExcludeIcons from "../../../components/EditAndExcludeIcons";
 import { useState, useEffect } from "react";
-import ModalCreateOrEditCard from "../../../components/Modal/CreateOrEditCard";
+import ModalCreateCard from "../../../components/Modal/CreateCard";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import { ICard } from "../../../common/interfaces/ICard";
 import dayjs from "dayjs";
+import ModalEditCard from "../../../components/Modal/EditCard";
 
 interface ICardProps {
   cardData: ICard;
@@ -81,12 +82,10 @@ const Card: React.FC<ICardProps> = ({ cardData, getAllActiveCards }) => {
         value={cardData.description}
         disabled={true}
       />
-      <ModalCreateOrEditCard
+      <ModalEditCard
         open={isEditModalOpen}
         onCancel={() => setIsEditModalOpen(false)}
-        headerText="Editar card"
         cardData={cardData}
-        isNewCard={false}
       />
     </div>
   );

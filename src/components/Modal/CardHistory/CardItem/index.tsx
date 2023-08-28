@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import "./CardItem.css";
 import { IoMdMore } from "react-icons/io";
-import ModalCreateOrEditCard from "../../CreateOrEditCard";
+import ModalCreateCard from "../../CreateCard";
 import { useState } from "react";
 import { ICard } from "../../../../common/interfaces/ICard";
 
@@ -24,7 +24,7 @@ const CardItem: React.FC<AllCompanyCardsListProps> = ({ card }) => {
         size={25}
         onClick={() => setIsEditModalOpen(true)}
       />
-      <ModalCreateOrEditCard
+      <ModalCreateCard
         open={isEditModalOpen}
         onCancel={() => setIsEditModalOpen(false)}
         headerText="Editar card"
