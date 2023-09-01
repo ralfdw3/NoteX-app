@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import "./CardItem.css";
 import { IoMdMore } from "react-icons/io";
-import ModalCreateCard from "../../CreateCard";
 import { useState } from "react";
 import { ICard } from "../../../../common/interfaces/ICard";
+import ModalEditCard from "../../EditCard";
 
 interface AllCompanyCardsListProps {
   card: ICard;
@@ -24,12 +24,10 @@ const CardItem: React.FC<AllCompanyCardsListProps> = ({ card }) => {
         size={25}
         onClick={() => setIsEditModalOpen(true)}
       />
-      <ModalCreateCard
+      <ModalEditCard
         open={isEditModalOpen}
         onCancel={() => setIsEditModalOpen(false)}
-        headerText="Editar card"
         cardData={card}
-        isNewCard={false}
       />
     </div>
   );

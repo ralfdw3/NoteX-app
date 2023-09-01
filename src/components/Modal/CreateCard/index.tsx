@@ -1,22 +1,18 @@
+import { IModalCreateCard } from "../../../common/interfaces/IModalCreateCard";
 import { Modal, Input, DatePicker, Select, Button } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { IModalCard } from "../../../common/interfaces/IModalCard";
 import { useState, useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import AlertError from "../../AlertCustom";
-import "./CreateCard.css";
+import "../style.css";
 
-const ModalCreateCard: React.FC<IModalCard> = ({
-  open,
-  onCancel,
-  cardData,
-}) => {
+const ModalCreateCard: React.FC<IModalCreateCard> = ({ open, onCancel }) => {
   const { TextArea } = Input;
 
   const [description, setDescription] = useState("");
   const [appearance, setAppearance] = useState<Dayjs>(dayjs());
   const [name, setName] = useState<string | undefined>("");
-  const [code, setCode] = useState<number | undefined>();
+  const [code, setCode] = useState<number | HTMLInputElement["value"]>();
   const [phone, setPhone] = useState<string | undefined>("");
   const [email, setEmail] = useState<string | undefined>("");
   const [status, setStatus] = useState("");
@@ -59,6 +55,14 @@ const ModalCreateCard: React.FC<IModalCard> = ({
       .catch(() => {
         setErrorAlertVisible(true);
       });
+  };
+
+  const fetchCompanyInfo = async () => {
+    const response = await fetch(`http://localhost:8080/v1/company/${code}`);
+    const company = await response.json();
+    setName(company.name);
+    setPhone(company.phone);
+    setEmail(company.email);
   };
 
   return (
@@ -108,6 +112,7 @@ const ModalCreateCard: React.FC<IModalCard> = ({
           placeholder="Código da empresa.."
           value={code}
           onChange={(e) => setCode(e.target.value)}
+          onBlur={fetchCompanyInfo}
         />
         <Input
           className="modal-input"

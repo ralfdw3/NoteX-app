@@ -1,7 +1,6 @@
 import "./Card.css";
 import EditAndExcludeIcons from "../../../components/EditAndExcludeIcons";
 import { useState, useEffect } from "react";
-import ModalCreateCard from "../../../components/Modal/CreateCard";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import { ICard } from "../../../common/interfaces/ICard";

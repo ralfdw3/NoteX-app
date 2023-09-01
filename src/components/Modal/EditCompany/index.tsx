@@ -2,7 +2,6 @@ import { Modal, Input, Button, Select } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { IModalCompany } from "../../../common/interfaces/IModalCompany";
 import { useState, useEffect } from "react";
-import "./EditCard.css";
 
 const ModalEditCompany: React.FC<IModalCompany> = ({
   open,
@@ -11,20 +10,18 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
 }) => {
   const [id, setId] = useState<string | undefined>("");
   const [name, setName] = useState<string | undefined>("");
-  const [code, setCode] = useState(0);
+  const [code, setCode] = useState<number | HTMLInputElement["value"]>();
   const [phone, setPhone] = useState<string | undefined>("");
   const [email, setEmail] = useState<string | undefined>("");
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    if (companyData != null) {
-      setId(companyData.id);
-      setName(companyData.name);
-      setCode(companyData.code);
-      setPhone(companyData.phone);
-      setEmail(companyData.email);
-      setStatus(companyData.status);
-    }
+    setId(companyData.id);
+    setName(companyData.name);
+    setCode(companyData.code);
+    setPhone(companyData.phone);
+    setEmail(companyData.email);
+    setStatus(companyData.status);
   }, [companyData]);
 
   const handleSaveCard = () => {

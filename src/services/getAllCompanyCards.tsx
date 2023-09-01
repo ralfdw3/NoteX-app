@@ -1,3 +1,5 @@
+import AlertCustom from "../components/AlertCustom";
+
 const BASE_URL = "http://localhost:8080/v1/card";
 
 export const getAllCompanyCards = async (pageNumber: number, id: string) => {
@@ -14,12 +16,12 @@ export const getAllCompanyCards = async (pageNumber: number, id: string) => {
         "Content-Type": "application/json",
       },
     });
-    if (!response.ok) {
-      alert("Erro ao buscar cards.");
-    }
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   } catch (error) {
-    alert("Erro ao buscar todos os cards de uma empresa. " + error);
+    <AlertCustom
+      type="error"
+      message="Erro ao buscar todos os cards de uma empresa"
+    />;
   }
 };

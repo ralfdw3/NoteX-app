@@ -1,19 +1,22 @@
 import { Modal, Input, DatePicker, Select, Button } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { IModalCard } from "../../../common/interfaces/IModalCard";
-import "./EditCard.css";
+import { IModalEditCard } from "../../../common/interfaces/IModalEditCard";
 import { useState, useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import AlertError from "../../AlertCustom";
 
-const ModalEditCard: React.FC<IModalCard> = ({ open, onCancel, cardData }) => {
+const ModalEditCard: React.FC<IModalEditCard> = ({
+  open,
+  onCancel,
+  cardData,
+}) => {
   const { TextArea } = Input;
 
   const [id, setId] = useState("");
   const [description, setDescription] = useState("");
   const [appearance, setAppearance] = useState<Dayjs>(dayjs());
   const [name, setName] = useState<string | undefined>("");
-  const [code, setCode] = useState<number | undefined>(undefined);
+  const [code, setCode] = useState<number | HTMLInputElement["value"]>();
   const [phone, setPhone] = useState<string | undefined>("");
   const [email, setEmail] = useState<string | undefined>("");
   const [status, setStatus] = useState("");

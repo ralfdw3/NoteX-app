@@ -2,8 +2,9 @@ import { AiOutlineHistory } from "react-icons/ai";
 import "./CompanyItem.css";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ICompany } from "../../common/interfaces/ICompany";
+import { deleteCompany } from "../../services/deleteCompany";
 import EditAndExcludeIcons from "../EditAndExcludeIcons";
 import ModalCardHistory from "../Modal/CardHistory";
 import ModalEditCompany from "../Modal/EditCompany";
@@ -13,21 +14,12 @@ interface ICompanyProps {
   getAllActiveCompanies: () => void;
 }
 
-const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
+const CompanyItem: React.FC<ICompanyProps> = ({
+  companyData,
+  getAllActiveCompanies,
+}) => {
   const handleDeleteCompany = () => {
-    fetch(
-      `http://localhost:8080/v1/company?code=${companyData.code}&status=INATIVO`,
-      {
-        method: "DELETE",
-      }
-    )
-      .then((response) => response.json())
-      .then(() => {
-        getAllActiveCompanies();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    deleteCompany(companyData);
   };
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -85,5 +77,4 @@ const CompanyItem = ({ companyData, getAllActiveCompanies }: ICompanyProps) => {
     </div>
   );
 };
-
 export default CompanyItem;
