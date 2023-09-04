@@ -55,8 +55,6 @@ const Home: React.FC = () => {
       <ModalCreateCard
         open={isCreateCardModalOpen}
         onCancel={() => setIsCreateCardModalOpen(false)}
-        headerText="Novo card"
-        isNewCard={true}
       />
     </section>
   );

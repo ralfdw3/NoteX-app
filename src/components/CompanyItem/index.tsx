@@ -42,7 +42,7 @@ const CompanyItem: React.FC<ICompanyProps> = ({
   };
 
   useEffect(() => {
-    getAllActiveCompanies();
+    if (isEditModalOpen) getAllActiveCompanies();
   }, [isEditModalOpen]);
 
   return (

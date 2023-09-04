@@ -9,7 +9,8 @@
 body {
   background: linear-gradient(180deg, #352163 0%, #331972 57.81%, #33143c 100%);
   width: auto;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   overflow-x: hidden;
   color: #fff;
 }

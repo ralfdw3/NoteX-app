@@ -15,6 +15,7 @@ const ModalEditCard: React.FC<IModalEditCard> = ({
   const [id, setId] = useState("");
   const [description, setDescription] = useState("");
   const [appearance, setAppearance] = useState<Dayjs>(dayjs());
+  const [companyId, setCompanyId] = useState<string | undefined>("");
   const [name, setName] = useState<string | undefined>("");
   const [code, setCode] = useState<number | HTMLInputElement["value"]>();
   const [phone, setPhone] = useState<string | undefined>("");
@@ -27,6 +28,7 @@ const ModalEditCard: React.FC<IModalEditCard> = ({
       setId(cardData.id);
       setDescription(cardData.description ?? "");
       setAppearance(cardData.appearance);
+      setCompanyId(cardData.company.id);
       setCode(cardData.company.code);
       setName(cardData.company.name);
       setPhone(cardData.company.phone);
@@ -35,6 +37,7 @@ const ModalEditCard: React.FC<IModalEditCard> = ({
     } else {
       setId("");
       setDescription("");
+      setCompanyId("");
       setCode(0);
       setName("");
       setPhone("");
@@ -55,13 +58,14 @@ const ModalEditCard: React.FC<IModalEditCard> = ({
 
   const handleSaveCard = () => {
     const companyRequest = {
+      id: companyId,
       code,
       name,
       phone,
       email,
     };
 
-    const formData = {
+    const cardRequest = {
       id,
       description,
       appearance,
@@ -73,11 +77,11 @@ const ModalEditCard: React.FC<IModalEditCard> = ({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(cardRequest),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(formData);
+        console.log(cardRequest);
         console.log(data);
         onCancel();
       })

@@ -43,7 +43,7 @@ const Company = () => {
 
   const getCompaniesBySearchTerm = (searchTerm: string) => {
     fetch(
-      "http://localhost:8080/v1/company/active?page=" +
+      "http://localhost:8080/v1/company/actives?page=" +
         `${pageNumber}` +
         "&size=10&sort=creation,asc&searchTerm=" +
         `${searchTerm}`,
