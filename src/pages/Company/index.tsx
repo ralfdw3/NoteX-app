@@ -4,6 +4,7 @@ import { Input } from "antd";
 import CompanyList from "../../components/CompanyList";
 import { useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
+import AlertCustom from "../../components/AlertCustom";
 
 const Company = () => {
   const [allActiveCompanies, setAllActiveCompanies] = useState([]);
@@ -28,20 +29,21 @@ const Company = () => {
     )
       .then((response) =>
         response.json().then((data) => {
-          console.log(data);
           setAllActiveCompanies(data.content);
           setTotalPages(data.totalPages);
         })
       )
-      .catch((error) => {
-        console.log();
-        alert("Erro ao buscar as empresas ativas. " + error);
+      .catch(() => {
+        <AlertCustom
+          type="error"
+          message="Erro ao buscar todas as empresas ativas."
+        />;
       });
   };
 
   const getCompaniesBySearchTerm = (searchTerm: string) => {
     fetch(
-      "http://localhost:8080/v1/company/active?page=" +
+      "http://localhost:8080/v1/company/actives?page=" +
         `${pageNumber}` +
         "&size=10&sort=creation,asc&searchTerm=" +
         `${searchTerm}`,
@@ -58,9 +60,8 @@ const Company = () => {
           setTotalPages(data.totalPages);
         })
       )
-      .catch((error) => {
-        console.log();
-        alert("Erro ao buscar as empresas ativas. " + error);
+      .catch(() => {
+        <AlertCustom type="error" message="Erro ao buscar empresas." />;
       });
   };
 

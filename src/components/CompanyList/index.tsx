@@ -15,8 +15,8 @@ const CompanyList = ({
     <div className="company-list">
       {allActiveCompanies.map((company) => (
         <CompanyItem
-          companyData={company}
           key={company.id}
+          companyData={company}
           getAllActiveCompanies={getAllActiveCompanies}
         />
       ))}

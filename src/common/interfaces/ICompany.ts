@@ -1,6 +1,8 @@
 export interface ICompany {
-  id: string;
+  id?: string;
   name?: string;
-  code: string;
+  code: number;
   status: string;
+  phone?: string;
+  email?: string;
 }

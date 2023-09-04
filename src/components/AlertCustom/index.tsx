@@ -4,7 +4,7 @@ import { Alert } from "antd";
 interface AlertProps {
   type: "success" | "info" | "warning" | "error" | undefined;
   message: string;
-  description: string;
+  description?: any;
   timeOut?: number;
 }
 

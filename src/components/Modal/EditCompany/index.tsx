@@ -2,25 +2,26 @@ import { Modal, Input, Button, Select } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { IModalCompany } from "../../../common/interfaces/IModalCompany";
 import { useState, useEffect } from "react";
-import "./EditCard.css";
 
 const ModalEditCompany: React.FC<IModalCompany> = ({
   open,
   onCancel,
   companyData,
 }) => {
-  const [id, setId] = useState("");
+  const [id, setId] = useState<string | undefined>("");
   const [name, setName] = useState<string | undefined>("");
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState<number | HTMLInputElement["value"]>();
+  const [phone, setPhone] = useState<string | undefined>("");
+  const [email, setEmail] = useState<string | undefined>("");
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    if (companyData != null) {
-      setId(companyData.id);
-      setName(companyData.name);
-      setCode(companyData.code);
-      setStatus(companyData.status);
-    }
+    setId(companyData.id);
+    setName(companyData.name);
+    setCode(companyData.code);
+    setPhone(companyData.phone);
+    setEmail(companyData.email);
+    setStatus(companyData.status);
   }, [companyData]);
 
   const handleSaveCard = () => {
@@ -28,6 +29,8 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
       id,
       name,
       code,
+      phone,
+      email,
       status,
     };
     fetch("http://localhost:8080/v1/company", {
@@ -43,6 +46,7 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
         onCancel();
       })
       .catch((error) => {
+        console.log(formData);
         console.error(error);
         alert("Erro ao alterar os dados da empresa.");
       });
@@ -94,6 +98,18 @@ const ModalEditCompany: React.FC<IModalCompany> = ({
           placeholder="Código da empresa.."
           value={code}
           onChange={(e) => setCode(e.target.value)}
+        />
+        <Input
+          className="modal-input"
+          placeholder="Telefone da empresa.."
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+        <Input
+          className="modal-input"
+          placeholder="E-mail da empresa.."
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </Content>
 

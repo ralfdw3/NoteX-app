@@ -30,7 +30,9 @@ const ModalCardHistory: React.FC<IModalCardHistory> = ({
   };
 
   useEffect(() => {
-    getCompanies(pageNumber, company.id);
+    if (open && company && company.id) {
+      getCompanies(pageNumber, company.id);
+    }
   }, [open, pageNumber]);
 
   return (
